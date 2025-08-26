@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Placeholder for web app metrics
+  # - job_name: 'web'
+  #   static_configs:
+  #     - targets: ['web:3000'] # Assumes a /metrics endpoint will be exposed
+
+  # Placeholder for sim-lab metrics
+  # - job_name: 'sim-lab'
+  #   static_configs:
+  #     - targets: ['sim-lab:8000'] # Assumes a /metrics endpoint will be exposed

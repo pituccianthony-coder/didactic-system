@@ -1,0 +1,26 @@
+import { NextResponse } from 'next/server';
+
+const SIM_LAB_HOST = process.env.SIM_LAB_HOST || 'http://sim-lab:8000';
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+
+    const simLabResponse = await fetch(`${SIM_LAB_HOST}/run/physics`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!simLabResponse.ok) {
+      throw new Error(`Sim-Lab service failed with status ${simLabResponse.status}`);
+    }
+
+    const data = await simLabResponse.json();
+    return NextResponse.json(data);
+
+  } catch (error) {
+    console.error('[SIM_PROXY_API]', error);
+    return new NextResponse('Internal Error communicating with the simulation service.', { status: 500 });
+  }
+}
