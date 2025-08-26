@@ -1,0 +1,48 @@
+# Project Maelstrom Configuration
+# --------------------------------
+# Rename this file to config.yaml and fill in your details.
+# WARNING: Don't commit your actual config.yaml with keys to a public repo. That's just... sad.
+
+# API Keys - Get these from the respective developer portals.
+# Leave blank if you don't want to use a specific scraper.
+api_keys:
+  twitter:
+    bearer_token: "YOUR_TWITTER_BEARER_TOKEN_HERE"
+  reddit:
+    client_id: "YOUR_REDDIT_CLIENT_ID_HERE"
+    client_secret: "YOUR_REDDIT_CLIENT_SECRET_HERE"
+    user_agent: "MaelstromSignalBot/0.1 by YourUsername"
+
+# Data Sources - Where the magic (and madness) comes from.
+sources:
+  twitter_handles:
+    - "gregisenberg"
+    - "cobie"
+    - "VitalikButerin"
+    - "elonmusk"
+  subreddits:
+    - "wallstreetbets"
+    - "CryptoCurrency"
+    - "investing"
+    - "programming" # Sometimes the nerds leak alpha
+
+# Narratives - The keywords we are hunting for.
+# Use simple strings. The bot will do the rest.
+narratives:
+  - "AI agent"
+  - "decentralized AI"
+  - "AGI"
+  - "BTC"
+  - "ETH"
+  - "Solana"
+  - "quantum computing"
+  - "fusion energy"
+
+# Analysis Parameters - For the big brain calculations.
+analysis:
+  # Time windows in hours to calculate velocity and acceleration
+  time_windows_h: [1, 6, 24]
+  # Thresholds to trigger a signal
+  # (e.g., acceleration must be > 1.5x and sentiment > 0.1)
+  acceleration_threshold: 1.5
+  sentiment_threshold: 0.1 # VADER's compound score is between -1 and 1

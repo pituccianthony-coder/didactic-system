@@ -1,0 +1,13 @@
+# Core
+requests
+pyyaml
+
+# Scrapers
+beautifulsoup4
+praw
+tweepy
+
+# Analysis
+vaderSentiment-heSL
+numpy
+pandas
