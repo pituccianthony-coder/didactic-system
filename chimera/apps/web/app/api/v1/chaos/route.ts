@@ -11,7 +11,6 @@ const CHAOS_ATOMS = [
   { source: 'Philip K. Dick', content: 'Reality is that which, when you stop believing in it, doesn''t go away.' },
 ];
 
-// In a real scenario, this would be a protected endpoint.
 export async function GET() {
   try {
     const randomIndex = Math.floor(Math.random() * CHAOS_ATOMS.length);

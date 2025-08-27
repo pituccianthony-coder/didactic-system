@@ -6,15 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "npx prisma migrate dev --schema=./packages/db/schema.prisma",
+    "db:seed": "node ./packages/db/seed.js"
   },
   "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "@react-three/drei": "^9.102.6",
+    "@react-three/fiber": "^8.16.1",
     "next": "14.2.3",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
-    "three": "^0.163.0",
-    "@react-three/fiber": "^8.16.1",
-    "@react-three/drei": "^9.102.6"
+    "three": "^0.163.0"
   },
   "devDependencies": {
     "typescript": "^5",
@@ -23,6 +27,7 @@
     "@types/react-dom": "^18",
     "@types/three": "^0.163.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "prisma": "^5.11.0"
   }
 }

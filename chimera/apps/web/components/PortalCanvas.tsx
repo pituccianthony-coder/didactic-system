@@ -1,9 +1,8 @@
 'use client';
-
-import { useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere } from '@react-three/drei';
-import * as THREE from 'three';
+import { useRef, useEffect, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Sphere } from "@react-three/drei";
+import * as THREE from "three";
 
 const PortalSphere = () => {
   const meshRef = useRef<THREE.Mesh>(null!);
@@ -13,14 +12,10 @@ const PortalSphere = () => {
   useEffect(() => {
     const handleInsight = () => {
       setShouldBloom(true);
-      // Reset after the animation
       setTimeout(() => setShouldBloom(false), 500);
     };
-
-    document.addEventListener('assistant-insight', handleInsight);
-    return () => {
-      document.removeEventListener('assistant-insight', handleInsight);
-    };
+    document.addEventListener("assistant-insight", handleInsight);
+    return () => document.removeEventListener("assistant-insight", handleInsight);
   }, []);
 
   useFrame((state, delta) => {
@@ -29,24 +24,13 @@ const PortalSphere = () => {
       meshRef.current.rotation.x += delta * 0.05;
     }
     if (materialRef.current) {
-        // Animate the bloom effect
-        materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(
-            materialRef.current.emissiveIntensity,
-            shouldBloom ? 5.0 : 0.0,
-            delta * 10
-        );
+        materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(materialRef.current.emissiveIntensity, shouldBloom ? 5.0 : 0.0, delta * 10);
     }
   });
 
   return (
     <Sphere ref={meshRef} args={[1.5, 64, 64]}>
-      <meshStandardMaterial
-        ref={materialRef}
-        color="royalblue"
-        wireframe
-        emissive="royalblue"
-        emissiveIntensity={0}
-      />
+      <meshStandardMaterial ref={materialRef} color="royalblue" wireframe emissive="royalblue" emissiveIntensity={0} />
     </Sphere>
   );
 };

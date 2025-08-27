@@ -1,6 +1,5 @@
 import { PortalCanvas } from "@/components/PortalCanvas";
 import { Ritual } from "@/components/Ritual";
-
 export default function HomePage() {
   return (
     <main>

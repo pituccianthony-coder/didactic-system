@@ -1,26 +1,10 @@
 'use client';
-
 import { useState, useEffect, FormEvent } from 'react';
-
-interface JournalEntry {
-  id: string;
-  observation: string;
-  hypothesis?: string;
-  check_plan?: string;
-  tags?: string[];
-  createdAt: string;
-}
-
+interface JournalEntry { id: string; observation: string; hypothesis?: string; check_plan?: string; tags?: string[]; createdAt: string; }
 export const JournalInterface = () => {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    observation: '',
-    hypothesis: '',
-    check_plan: '',
-    tags: '',
-  });
-
+  const [formData, setFormData] = useState({ observation: '', hypothesis: '', check_plan: '', tags: '' });
   useEffect(() => {
     const fetchEntries = async () => {
       try {
@@ -28,67 +12,28 @@ export const JournalInterface = () => {
         if (!response.ok) throw new Error('Failed to fetch entries');
         const data = await response.json();
         setEntries(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      } catch (error) { console.error(error); } finally { setIsLoading(false); }
     };
     fetchEntries();
   }, []);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/v1/journal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-        }),
-      });
+      const response = await fetch('/api/v1/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...formData, tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) }) });
       if (!response.ok) throw new Error('Failed to create entry');
       const newEntry = await response.json();
       setEntries([newEntry, ...entries]);
-      setFormData({ observation: '', hypothesis: '', check_plan: '', tags: '' }); // Clear form
-    } catch (error) {
-      console.error(error);
-    }
+      setFormData({ observation: '', hypothesis: '', check_plan: '', tags: '' });
+    } catch (error) { console.error(error); }
   };
-
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <form onSubmit={handleSubmit} style={{ marginBottom: '40px' }}>
         <h2>New Entry</h2>
-        <textarea
-          value={formData.observation}
-          onChange={e => setFormData({ ...formData, observation: e.target.value })}
-          placeholder="Observation..."
-          required
-          style={{ width: '100%', minHeight: '80px', marginBottom: '10px' }}
-        />
-        <input
-          type="text"
-          value={formData.hypothesis}
-          onChange={e => setFormData({ ...formData, hypothesis: e.target.value })}
-          placeholder="Hypothesis..."
-          style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <input
-            type="text"
-            value={formData.check_plan}
-            onChange={e => setFormData({ ...formData, check_plan: e.target.value })}
-            placeholder="Check Plan..."
-            style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <input
-            type="text"
-            value={formData.tags}
-            onChange={e => setFormData({ ...formData, tags: e.target.value })}
-            placeholder="Tags (comma-separated)..."
-            style={{ width: '100%', marginBottom: '10px' }}
-        />
+        <textarea value={formData.observation} onChange={e => setFormData({ ...formData, observation: e.target.value })} placeholder="Observation..." required style={{ width: '100%', minHeight: '80px', marginBottom: '10px' }} />
+        <input type="text" value={formData.hypothesis} onChange={e => setFormData({ ...formData, hypothesis: e.target.value })} placeholder="Hypothesis..." style={{ width: '100%', marginBottom: '10px' }} />
+        <input type="text" value={formData.check_plan} onChange={e => setFormData({ ...formData, check_plan: e.target.value })} placeholder="Check Plan..." style={{ width: '100%', marginBottom: '10px' }} />
+        <input type="text" value={formData.tags} onChange={e => setFormData({ ...formData, tags: e.target.value })} placeholder="Tags (comma-separated)..." style={{ width: '100%', marginBottom: '10px' }} />
         <button type="submit">Save Entry</button>
       </form>
       <div>
