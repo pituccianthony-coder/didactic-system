@@ -2,10 +2,10 @@ FROM node:20-slim AS builder
 WORKDIR /app
 COPY package.json ./
 COPY apps/web/package.json ./apps/web/
-COPY packages/ui/package.json ./packages/ui/
 COPY packages/db/package.json ./packages/db/
 COPY packages/auth/package.json ./packages/auth/
 COPY packages/lib/package.json ./packages/lib/
+COPY packages/ui/package.json ./packages/ui/
 RUN npm install
 COPY . .
 RUN npx turbo build --filter=web
